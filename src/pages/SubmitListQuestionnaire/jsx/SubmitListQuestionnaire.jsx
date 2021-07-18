@@ -1,89 +1,96 @@
 import React, { Component } from 'react'
-import { Table, Space } from 'antd';
-// import reqwest from 'reqwest';
+import { Table, Space, message,Layout, Button, Spin } from 'antd';
+import {Content, Footer, Header} from "antd/es/layout/layout";
 import { DeleteOutlined,EyeOutlined  } from '@ant-design/icons';
 import SubmitDetailQuestionnaire from './SubmitDetailQuestionnaire'
-
-const data = [
-    {ans_qid:22,key:22,title:"test1",status:0,time:"2020-1.0",checked:false},
-    {ans_qid:23,key:23,title:"test1",status:0,time:"2020-1.0",checked:false},
-    {ans_qid:24,key:24,title:"test1",status:0,time:"2020-1.0",checked:false},
-    {ans_qid:25,key:25,title:"test1",status:1,time:"2020-1.0",checked:false},
-    {ans_qid:26,key:26,title:"test1",status:1,time:"2020-1.0",checked:false},
-    {ans_qid:27,key:27,title:"test1",status:1,time:"2020-1.0",checked:false}
-];
-
-const questionnaire = {
-    title: "test",
-    ans_qid: "123",
-    publisher: "Firstsup",
-    state: "发布中",
-    fillerCount: 5,
-    releaseTime: new Date("2020-1-1"),
-    deadline: new Date("2020-12-31"),
-    questions: [
-        {
-            subject: "question1:你喜欢什么食物",
-            type: "单选题",
-            isNecessary: true,
-            options: ["option1", "option2", "option3"],
-        },
-        {
-            subject: "question2：你喜欢什么动物",
-            type: "多选题",
-            isNecessary: true,
-            options: ["如今，数据科学竞赛（大数据竞赛，机器学习竞赛，人工智能算法竞赛）已经成为各大知名互联网企业征集解决方案和选拔人才的第一选择，很多同学为了拿到大厂offer，纷纷加入了数据竞赛的浪潮之中。遗憾的是，大部分同学都在激烈的竞争中成为炮灰，许多人不停地上网浏览各类竞赛开源分享，却依旧感到困惑迷茫。", "option2", "option3"],
-        },
-        {
-            subject: "question3：描述一下自己",
-            type: "文本题",
-            isNecessary: true,
-        },
-        {
-            subject: "question4：下面哪个你最喜欢",
-            type: "单选题",
-            isNecessary: false,
-            options: ["option1", "option2", "option3", "option4", "option5", "option6", "option7", "option8"],
-        },
-        {
-            subject: "question5：下面哪些你最喜欢",
-            type: "多选题",
-            isNecessary: false,
-            options: ["option1", "option2", "option3", "option4"],
-        },
-        {
-            subject: "question6：对本问卷满意吗",
-            type: "文本题",
-            isNecessary: false,
-        }
-    ]
-}
-
-// const getRandomuserParams = params => ({
-//     results: params.pagination.pageSize,
-//     page: params.pagination.current,
-//     ...params,
-// });
+import timeConversion from "../../../utils/TimeConversion"
+import '../css/SubmitListQuestionnaire.css'
+import Title from "antd/es/typography/Title";
 
 export default class SubmitListQuestionnaire extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: data,
+            data: '',
+            qid:"",
+            ans_qid:'',
+            answers:'',
+            title:'',
+            xuhao:'',
+            questionnaire: {
+                questions: []
+            },
             questionnnaireIndex: -1,
-            // ans_qid: ans_qid,
             pagination: {
                 current: 1,
                 pageSize: 10,
             },
             loading: false,
             tableRowId: -1,
-            questionnaire: questionnaire,
             modalVisible: false
         }
     }
 
     handleOnClick = () => {
+        const Params = {
+            "qid":this.state.qid,
+            "ans_qid":this.state.ans_qid
+        };
+        fetch('/api/ansContent',{
+            method: 'post',
+            body: JSON.stringify(Params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(res =>{
+            var anslist = res.data.data1[0].ans_list
+            this.setState({
+                questionnaire: {
+                    questions: res.data.data2[0].ask_list.map((list,index) => {
+                        var anss = [] 
+                        if(list.type === 1){
+                          if(anslist[index].choice[0] == ''){        
+                            anss.push("用户未回答");  
+                          }   
+                          else{
+                            var a =  anslist[index].choice[0].charCodeAt(0) - 65  
+                            anss.push(res.data.data2[0].ask_list[index].choice_list[a].content)
+                          }      
+                        }
+                        else if(list.type === 2){
+                          let arr = []
+                          if(anslist[index].choice[0] == '')
+                            anss.push("用户未回答");
+                          else{
+                            for(let i = 0; i < (anslist[index].choice.length); i++){
+                              arr.push(anslist[index].choice[i].charCodeAt(0) - 65);
+                            }
+                            var j = 0;
+                            arr.map((item)=>{
+                              anss.push(res.data.data2[0].ask_list[index].choice_list[item].content);
+                            })
+                          }
+                        }
+                        else if(list.type === 3){
+                          var a =  anslist[index].ans
+                          if(a == '')
+                            anss.push("用户未回答");
+                          else
+                            anss.push(a)
+                        }
+                        return ({
+                            subject: list.ask,
+                            type: list.type === 1 ? "单选题" : (list.type === 2 ? "多选题" : "文本题"),
+                            isNecessary: list.isNecessary,
+                            ans:anss
+                        })
+                    })
+                }
+            })
+            this.setState({answers: res.data.data1[0]})
+        });
         this.setState({modalVisible: true})
     }
 
@@ -94,120 +101,129 @@ export default class SubmitListQuestionnaire extends Component {
     handleDelete = () => {
         if(window.confirm('确定删除吗？')){
             const { data,tableRowId } = this.state
-            console.log("tableRowId",tableRowId)
-            console.log("data22222222",data)
-            const newData = data.filter(
-                (dataObj) => {
-                    console.log("data",dataObj.ans_qid)
-                    console.log(dataObj.ans_qid !== tableRowId)
-                    return dataObj.ans_qid !== tableRowId
+            const Params = {
+                "ans_qid":tableRowId
+            };
+            fetch('/api/deleAns',{
+                method: 'post',
+                body: JSON.stringify(Params),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            }).then(res => res.json())
+                .then(res =>{
+                if (res.code === 1) {
+                    const newData = data.filter(
+                        (dataObj) => {
+                            return dataObj.ans_qid !== tableRowId
+                        }
+                    )
+                    this.setState({data:newData})
+                    this.setState({modalVisible: false})
+                    message.info("删除成功！")
+                } else {
+                    alert("数据库故障，未删除成功！")
                 }
-            )
-            this.setState({data:newData})
-            this.setState({modalVisible: false})
+            });
         }
     }
 
-    settableRowId = (tableRowId) => {
-        this.setState({tableRowId:tableRowId})
+    settableRowId = (qid,ans_qid,key) => {
+        this.setState({tableRowId:ans_qid,qid:qid,ans_qid:ans_qid,xuhao:key})
     }
 
-    // componentDidMount() {
-    //     const { pagination } = this.state;
-    //     this.fetch({ pagination });
-    // }
-
-    // handleTableChange = (pagination, filters, sorter) => {
-    //     this.fetch({
-    //         sortField: sorter.field,
-    //         sortOrder: sorter.order,
-    //         pagination,
-    //         ...filters,
-    //     });
-    // };
-
-    // fetch = (params = {}) => {
-    //     this.setState({ loading: true });
-    //     reqwest({
-    //         url: 'https://randomuser.me/api',
-    //         method: 'get',
-    //         type: 'json',
-    //         data: getRandomuserParams(params),
-    //     }).then(data => {
-    //         console.log(data);
-    //         this.setState({
-    //         loading: false,
-    //         // data: data.results,
-    //         data:data,
-    //         pagination: {
-    //             ...params.pagination,
-    //             total: 200,
-    //             // 200 is mock data, you should read it from server
-    //             // total: data.totalCount,
-    //         },
-    //         });
-    //     });
-    // };
+    componentDidMount() {
+        const Params = {
+          "qid":(this.props.location.search.split('=')[1]).split('&')[0],
+          "title":this.props.location.search.split('=')[2]
+        };
+        this.setState({title:this.props.location.search.split('=')[2],qid:(this.props.location.search.split('=')[1]).split('&')[0]})
+        fetch('/api/ans',{
+            method: 'post',
+            body: JSON.stringify(Params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(res =>{
+            var newData = []
+                res.data.map(((item, index) => {
+                    newData.push(Object.assign({}, item, {
+                        key: index+1,
+                        ans_time: timeConversion(item.ans_time)
+                    }))
+                }))
+                this.setState({data: newData})
+        });
+    }
 
     render() {
-        const {data,questionnnaireIndex} = this.state
-        // console.log(data)
-        const columns = [
-            {
-                title: '序号',
-                dataIndex: 'key',
-                // sorter: true,
-                sorter: (a, b) => a.key - b.key,
-                // render: name => `${key}`,
-                width: '20%',
-            },
-            {
-                title: '提交答卷时间',
-                dataIndex: 'time',
-                // filters: [
-                // { text: 'Male', value: 'male' },
-                // { text: 'Female', value: 'female' },
-                // ],
-                width: '20%',
-            },
-            {
-                title: '操作',
-                dataIndex: 'action',
-                render: () => (
-                    <Space size="middle">
-                      <span onClick={()=> this.handleDelete()}><DeleteOutlined /></span>
-                      <span onClick={()=> this.handleOnClick()}><EyeOutlined /></span>
-                    </Space>
-                ),
-            },
-        ];
-
+      const {data,questionnnaireIndex} = this.state
+      const columns = [
+        {
+            title: '序号',
+            dataIndex: 'key',
+            sorter: (a, b) => a.key - b.key,
+            width: '20%',
+        },
+        {
+            title: '提交答卷时间',
+            dataIndex: 'ans_time',
+            width: '40%',
+        },
+        {
+            title: '操作',
+            dataIndex: 'action',
+            render: () => (
+                <Space size="middle">
+                  <span onClick={() => this.handleDelete()}><DeleteOutlined /></span>
+                  <span onClick={() => this.handleOnClick()}><EyeOutlined /></span>
+                </Space>
+            ),
+        },
+      ];
+      if (this.state.loading === true || this.state.questionnaire.title === "") {
         return (
-            <>
-            <SubmitDetailQuestionnaire
-                    questionnaire={this.state.questionnaire}
-                    questionnnaireIndex = {questionnnaireIndex}
-                    modalVisible={this.state.modalVisible}
-                    handleDelete = {this.handleDelete}
-                    handleCancel={this.handleCancel}/>
-            <Table style={{width:'80%'}}
-            columns={columns}
-            // rowKey={record => record.login.uuid}
-            dataSource={data}
-            // pagination={pagination}
-            // loading={loading}
-            onChange={this.handleTableChange}
-            onRow = {(record) => {
+          <div
+            style={{
+                height: document.documentElement.clientHeight,
+                width: document.documentElement.clientWidth
+            }}>
+            <Spin className={"dataAnalysis_spin"} tip="加载中..."/>
+          </div>
+        )
+      } else {
+        return (
+          <Layout className={"analysis_layout"}>
+            <Header className={"analysis_header"}>
+              <Title className={"analysis_header_title"}
+              level={2}>问卷《{this.state.title}》的具体答卷</Title>
+            </Header>
+            <Content className={"analysis_content"}>
+              <SubmitDetailQuestionnaire
+                xuhao={this.state.xuhao}
+                questionnaire={this.state.questionnaire}
+                answers={this.state.answers}
+                questionnnaireIndex = {questionnnaireIndex}
+                modalVisible={this.state.modalVisible}
+                handleDelete = {this.handleDelete}
+                handleCancel={this.handleCancel}/>
+              <Table
+              columns={columns}
+              dataSource={data}
+              onChange={this.handleTableChange}
+              onRow = {(record) => {
                 return {
                   onMouseEnter: () => {
-                    console.log("record",record)
-                    this.settableRowId(record.ans_qid)
-                    }
+                    this.settableRowId(record.qid,record.ans_qid,record.key)
                   }
                 }
-              }
-            />
-            </>
+              }}/>
+            </Content>
+          </Layout>
         )
+      }
     }
 }
