@@ -81,7 +81,9 @@ export default class PageList extends Component {
 
     //发送请求
     componentDidMount() {
-        this.state.username = this.props.location.search.slice(10);
+        // this.setState({username:decodeURI(this.props.location.search.slice(10))})
+        console.log("usernaem",this.state.username);
+        this.state.username = decodeURI(this.props.location.search.slice(10));
         fetch('/api/manage?user=' + this.state.username, {
             method: 'get',
             headers: {
@@ -89,7 +91,7 @@ export default class PageList extends Component {
             },
         }).then(res => res.json())
             .then(res => {
-                console.log(res)
+                console.log("res",res)
                 var newData = []
                 res.data.data.map(((item, index) => {
                     newData.push(Object.assign({}, item, {
@@ -122,7 +124,8 @@ export default class PageList extends Component {
                         const newData = data.filter((dataObj) => {
                             return dataObj.qid !== rowId
                         })
-                        this.setState({data: newData})
+                        this.setState({data: newData,tempData: newData})
+                        // console.log("newData",newData);
                         message.info("删除成功！")
                     } else {
                         alert("数据库故障，未删除成功！")
@@ -161,7 +164,7 @@ export default class PageList extends Component {
                         const newData = data.filter((dataObj) => {
                             return !selectedRowKeys.includes(dataObj.key)
                         })
-                        this.setState({data: newData})
+                        this.setState({data: newData,tempData: newData})
                     } else {
                         alert("未选中问卷，删除不成功，请确认已选中问卷！")
                     }
@@ -225,8 +228,12 @@ export default class PageList extends Component {
         this.props.history.push('/editquestionnaire?qid=' + this.state.rowId)
     }
 
+    handleShare = () => {
+      copy('http://localhost:3000/fillquestionnaire?qid=' + this.state.rowId)
+      message.success("问卷链接已拷贝至粘贴板").then(() => null)
+    }
+
     render() {
-        console.log(this.state.username)
         const {selectedRowKeys, rowId, size, xScroll, yScroll, data, ...state} = this.state;
         const scroll = {};
         const rowSelection = {
@@ -254,23 +261,27 @@ export default class PageList extends Component {
             {
                 title: '问卷状态',
                 dataIndex: 'status',
-                width: "10%"
+                width: "10%",
             },
             {
                 sorter: (a, b) => a.age - b.age,
                 title: '截止时间',
                 dataIndex: 'time',
-                width: "35%"
+                width: "35%",
+                
             },
             {
                 title: '操作问卷',
                 key: 'action',
-                render: () => (
+                render: (record) => (
                     <Space size="middle">
+                        {/* <span>{{status}}</span> */}
                         <a onClick={() => this.handleDelete()}>删除</a>
-                        <a onClick={() => this.handleEdit()}>编辑问卷</a>
+                        {record.status == "发布中" ? <a onClick={() => this.handleShare()}>分享</a> : ''}
+                        {/* {record.status == "未发布" ? <a onClick={() => this.handleDelete()}>删除</a> : ''} */}
+                        {record.status == "未发布" ? <a onClick={() => this.handleEdit()}>编辑问卷</a> : ''}
                         <a onClick={() => this.handleOnClick()}>查看问卷</a>
-                        <a onClick={() => this.handleResult()}>查看结果</a>
+                        {record.status != "未发布" ?<a onClick={() => this.handleResult()}>查看结果</a>:''}
                     </Space>
                 ),
             },
