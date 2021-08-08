@@ -2,7 +2,7 @@
   "name": "questionnaire-survey-platform",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "./login",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/g2plot": "^2.3.24",
