@@ -107,7 +107,7 @@ class AddRadio extends React.Component {
         this.props.chiefMoveDown(this.state.aid);
     }
 
-    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             this.setState({
                 aid: this.props.aid,
