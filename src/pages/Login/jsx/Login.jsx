@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/Login.css';
 import {Form, Input, Button, Typography, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const {Title} = Typography;
 
@@ -66,9 +67,9 @@ class Login extends React.Component {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <a href="http://localhost:3000/register"><strong>现在注册！</strong></a>
-                        <a className="login-form-forgot" href="http://localhost:3000/resetpassword">忘记密码</a>
-                    </Form.Item>
+                        <Link to ="/register"><strong>现在注册！</strong></Link>
+                        <Link to="/resetpassword" >忘记密码</Link>
+                    </Form.Item>/resetpassword
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
                     </Form.Item>
