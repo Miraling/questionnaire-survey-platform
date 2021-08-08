@@ -20,6 +20,7 @@ class App extends Component {
         return (
             <ConfigProvider locale={cn}>
                 <BrowserRouter>
+                    <Route path={'/'} component={Login}/>
                     <Route path={'/fillquestionnaire'} component={FillQuestionnaire}/>
                     <Route path={'/fillquestionnairesubmitcomplete'} component={QuestionnaireSubmitComplete}/>
                     <Route path={'/dataanalysis'} component={DataAnalysis}/>
