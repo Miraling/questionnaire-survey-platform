@@ -2,7 +2,7 @@
   "name": "questionnaire-survey-platform",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./login",
+  "homepage": "https://miraling.github.io/questionnaire-survey-platform/",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/g2plot": "^2.3.24",
