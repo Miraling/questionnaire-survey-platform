@@ -37,7 +37,7 @@ class Login extends React.Component {
     render() {
         return (
             <>
-                <span>无云后端api</span>
+                <span>无云后端</span>
                 <img className={"login_title"} src={"./qlogo.png"} alt={"logo"}/>
                 <Form
                     name="normal_login"
