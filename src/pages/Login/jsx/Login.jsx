@@ -69,7 +69,7 @@ class Login extends React.Component {
                     <Form.Item>
                         <Link to ="/register"><strong>现在注册！</strong></Link>
                         <Link to="/resetpassword" >忘记密码</Link>
-                    </Form.Item>/resetpassword
+                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
                     </Form.Item>
