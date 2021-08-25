@@ -19,7 +19,7 @@ class App extends Component {
     render() {
         return (
             <ConfigProvider locale={cn}>
-                <BrowserRouter>
+                <BrowserRouter basename={'/questionnaire'}>
                     <Route path={'/fillquestionnaire'} component={FillQuestionnaire}/>
                     <Route path={'/fillquestionnairesubmitcomplete'} component={QuestionnaireSubmitComplete}/>
                     <Route path={'/dataanalysis'} component={DataAnalysis}/>
