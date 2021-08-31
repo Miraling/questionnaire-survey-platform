@@ -2,7 +2,7 @@
   "name": "questionnaire-survey-platform",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.lbling.top/questionnaire/",
+  "homepage": "https://www.lbling.top/questionnaire",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/g2plot": "^2.3.24",
