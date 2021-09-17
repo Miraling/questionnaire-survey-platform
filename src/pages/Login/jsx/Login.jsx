@@ -3,6 +3,8 @@ import '../css/Login.css';
 import {Form, Input, Button, Typography, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import qlogo from './qlogo.png';
+
 
 const {Title} = Typography;
 
@@ -37,7 +39,7 @@ class Login extends React.Component {
     render() {
         return (
             <>
-                <img className={"login_title"} src={"./qlogo.png"} alt={"logo"}/>
+                <img className={"login_title"} src={qlogo} alt={"logo"}/>
                 <Form
                     name="normal_login"
                     className="login-form"
@@ -50,7 +52,7 @@ class Login extends React.Component {
                                 message: '请输入用户名！',
                             },
                         ]}>
-                        <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="用户名"/>
+                        <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="用户名" size='large'/>
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -59,11 +61,13 @@ class Login extends React.Component {
                                 required: true,
                                 message: '请输入密码！',
                             },
-                        ]}>
+                        ]}
+                        size='large'>
                         <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon"/>}
                             type="password"
                             placeholder="密码"
+                            size='large'
                         />
                     </Form.Item>
                     <Form.Item>
