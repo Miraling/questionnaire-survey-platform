@@ -11,7 +11,13 @@
 
 
 
-## 2021.10.11 
+### 🎉🎉🎉网站已上线！地址：[点这里](https://www.lbling.top/questionnaire/)！
+
+
+
+## 日志主体(时间倒序)👇
+
+### 2021.10.11 
 
 修改了**注册，登录，修改密码界面**的样式，本机测试如下，**自适应程度较低**；
 
@@ -20,3 +26,7 @@
 辅助网站：[在网页预览不同像素设备效果](http://www.benjaminkeen.com/misc/bricss/)
 
 ![注册界面](https://s3.bmp.ovh/imgs/2021/10/fbe9c36acea8e9d8.jpeg)
+
+### 2021.9
+
+弄好了域名！部署了服务器！👉[**点击就看！部署笔记！**](https://miraling.github.io/2021/09/24/UseNginx.html)
