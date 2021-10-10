@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Input, Button, Form, Typography, message} from 'antd';
 import '../css/ResetPassword.css';
-
+import qlogo from './qlogo.png';
 const {Title} = Typography;
 
 class ResetPassword extends Component {
@@ -35,12 +35,13 @@ class ResetPassword extends Component {
 
     render() {
         return (
-            <>
-                <img className={"login_title"} src={"./qlogo.png"} alt={"logo"}/>
+            <div className='reset-background'>
+             
                 <Form
                     name="normal_reset"
                     className="reset-form"
                     onFinish={this.onFinish}>
+                          <img className={"login_title"} src={qlogo} alt={"logo"}/>
                     <Form.Item
                         name="username"
                         label={"用户名"}
@@ -58,7 +59,7 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input/>
+                        <Input placeholder='请输入用户名'/>
                     </Form.Item>
                     <Form.Item
                         name="check"
@@ -66,7 +67,7 @@ class ResetPassword extends Component {
                         rules={[
                             {
                                 required: true,
-                                message: '请输入手机尾号后4位！',
+                                message: '请输入密码凭证！',
                             },
                             ({getFieldValue}) => ({
                                 validator(_, value) {
@@ -77,7 +78,7 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input/>
+                        <Input placeholder='请输入您的4位密码凭证'/>
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -85,7 +86,7 @@ class ResetPassword extends Component {
                         rules={[
                             {
                                 required: true,
-                                message: '请输入密码！',
+                                message: '输入新密码！',
                             },
                             ({getFieldValue}) => ({
                                 validator(_, value) {
@@ -96,11 +97,11 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password/>
+                        <Input.Password placeholder='请设置新密码'/>
                     </Form.Item>
                     <Form.Item
                         name="repassword"
-                        label={"确认新密码"}
+                        label={"确认密码"}
                         rules={[
                             {
                                 required: true,
@@ -115,13 +116,13 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password/>
+                        <Input.Password placeholder='请确认新密码'/>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="reset-form-button">重置密码</Button>
                     </Form.Item>
                 </Form>
-            </>
+            </div>
         )
     }
 }

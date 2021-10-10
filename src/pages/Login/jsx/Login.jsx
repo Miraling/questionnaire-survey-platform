@@ -38,12 +38,13 @@ class Login extends React.Component {
 
     render() {
         return (
-            <>
-                <img className={"login_title"} src={qlogo} alt={"logo"}/>
+            <div className='login-background'>
+                
                 <Form
                     name="normal_login"
                     className="login-form"
                     onFinish={this.onFinish}>
+                        <img className={"login_title"} src={qlogo} alt={"logo"}/>
                     <Form.Item
                         name="username"
                         rules={[
@@ -75,10 +76,10 @@ class Login extends React.Component {
                         <Link to="/resetpassword" >忘记密码</Link>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
+                        <Button type="primary" htmlType="submit" size='large' className="login-form-button">登录</Button>
                     </Form.Item>
                 </Form>
-            </>
+            </div>
         )
     }
 }

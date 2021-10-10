@@ -1,6 +1,7 @@
 import React from 'react';
 import {Input, Button, Form, Typography, message} from 'antd';
 import '../css/Register.css';
+import qlogo from './qlogo.png';
 
 const {Title} = Typography;
 
@@ -33,12 +34,13 @@ class Register extends React.Component {
 
     render() {
         return (
-            <>
-                <img className={"login_title"} src={"./qlogo.png"} alt={"logo"}/>
-                <Form
+            <div className='login-background'>
+                
+                <Form labelAlign='right'
                     name="normal_register"
                     className="register-form"
                     onFinish={this.onFinish}>
+                         <img className={"login_title"} src={qlogo} alt={"logo"}/>
                     <Form.Item
                         name="username"
                         label={"用户名"}
@@ -56,7 +58,7 @@ class Register extends React.Component {
                                 },
                             }),
                         ]}>
-                        <Input/>
+                         <Input placeholder="用户名最长为10位" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -75,7 +77,7 @@ class Register extends React.Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password/>
+                        <Input.Password placeholder='请设置密码'/>
                     </Form.Item>
                     <Form.Item
                         name="repassword"
@@ -94,15 +96,15 @@ class Register extends React.Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password/>
+                        <Input.Password placeholder='请确认密码'/>
                     </Form.Item>
                     <Form.Item
                         name="check"
-                        label={"手机尾号后4位"}
+                        label={"密码凭证"}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入手机尾号后4位！',
+                                message: '请输入4位数字！',
                             },
                             ({getFieldValue}) => ({
                                 validator(_, value) {
@@ -113,13 +115,13 @@ class Register extends React.Component {
                                 },
                             }),
                         ]}>
-                        <Input/>
+                        <Input placeholder='请输入4位数字作为找回密码凭证'/>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="register-form-button">注册</Button>
+                        <Button type="primary" htmlType="submit" size='large' className="register-form-button">注册</Button>
                     </Form.Item>
                 </Form>
-            </>
+            </div>
         )
     }
 }
