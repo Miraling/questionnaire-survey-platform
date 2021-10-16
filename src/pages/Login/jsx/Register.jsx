@@ -115,7 +115,7 @@ class Register extends React.Component {
                                 },
                             }),
                         ]}>
-                        <Input placeholder='请输入4位数字作为找回密码凭证'/>
+                        <Input placeholder='设置4位数字作为找回密码凭证'/>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" size='large' className="register-form-button">注册</Button>

@@ -37,7 +37,7 @@ class ResetPassword extends Component {
         return (
             <div className='reset-background'>
              
-                <Form
+                <Form 
                     name="normal_reset"
                     className="reset-form"
                     onFinish={this.onFinish}>
@@ -59,11 +59,11 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input placeholder='请输入用户名'/>
+                        <Input placeholder='请输入用户名' size='large'/>
                     </Form.Item>
                     <Form.Item
                         name="check"
-                        label={"手机尾号后4位"}
+                        label={"密码凭证"}
                         rules={[
                             {
                                 required: true,
@@ -78,11 +78,11 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input placeholder='请输入您的4位密码凭证'/>
+                        <Input placeholder='请输入注册时设置的密码凭证' size='large'/>
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        label={"新密码"}
+                        label={"输入密码"}
                         rules={[
                             {
                                 required: true,
@@ -97,7 +97,7 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password placeholder='请设置新密码'/>
+                        <Input.Password placeholder='请设置新密码' size='large'/>
                     </Form.Item>
                     <Form.Item
                         name="repassword"
@@ -116,10 +116,10 @@ class ResetPassword extends Component {
                                 },
                             }),
                         ]}>
-                        <Input.Password placeholder='请确认新密码'/>
+                        <Input.Password placeholder='请确认新密码' size='large'/>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="reset-form-button">重置密码</Button>
+                        <Button type="primary" htmlType="submit" className="reset-form-button" size='large'>重置密码</Button>
                     </Form.Item>
                 </Form>
             </div>
