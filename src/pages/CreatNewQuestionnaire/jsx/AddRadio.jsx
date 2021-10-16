@@ -119,14 +119,15 @@ class AddRadio extends React.Component {
     render() {
         return (
             <div className={"add_div"}>
-                <Title level={3}>{this.state.aid}.&nbsp;<Input className={"add_title_input"} placeholder={"请输入题目"}
+                <Title level={3} className='add_title'>{this.state.aid}.&nbsp;<Input className={"add_title_input"} placeholder={"请输入题目"}
                                                                value={this.props.question.subject}
                                                                onChange={this.handleTitleChange}/></Title>
                 <div className={"add_isNecessary"}><span>该题为：&nbsp;&nbsp;</span>
                     <Radio.Group value={this.state.question.isNecessary} onChange={this.handleNecessaryChange}>
                         <Radio value={true}>必填</Radio>
                         <Radio value={false}>非必填</Radio>
-                    </Radio.Group></div>
+                    </Radio.Group>
+                    </div>
                 <div>
                     {this.props.question.choiceList.map((choice, cid) => {
                         return (
@@ -148,6 +149,7 @@ class AddRadio extends React.Component {
                         )
                     })}
                 </div>
+                <div>
                 <Button className={"add_choice"} type="dashed" onClick={this.addChoice}><PlusOutlined/>添加选项</Button>
                 <Button className={"add_button"} size={"small"} icon={<CloseCircleOutlined/>}
                         onClick={this.handleDelete}>删除</Button>
@@ -155,6 +157,7 @@ class AddRadio extends React.Component {
                         onClick={this.moveDown}>下移</Button>
                 <Button className={"add_button"} size={"small"} icon={<UpCircleOutlined/>}
                         onClick={this.moveUp}>上移</Button>
+                    </div>
             </div>
         )
     }

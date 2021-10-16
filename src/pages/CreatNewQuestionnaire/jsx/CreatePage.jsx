@@ -1,9 +1,10 @@
 import React from 'react';
-import {Affix, Button, DatePicker, Divider, Input, message, Statistic} from 'antd';
+import {Card, Button, DatePicker, Divider, Input, message, Statistic,Typography} from 'antd';
 import {CheckOutlined, EditTwoTone, PlusCircleTwoTone, PlusSquareTwoTone, ProfileOutlined} from '@ant-design/icons';
 import '../css/CreatQuestion.css';
 import CreateQuestion from './CreateQuestion';
 import moment from "moment";
+const {Title} = Typography;
 
 class CreatePage extends React.Component {
     constructor(props) {
@@ -325,30 +326,35 @@ class CreatePage extends React.Component {
     }
 
     render() {
-        console.log(this.state.questionnaire)
         return (
             <>
-                <Affix className={"create_affix"} offsetTop={200}>
-                    <div>
+                <div className={"create_affix"} >
+               
                         <Button className={"create_button"}
                                 onClick={this.onAddRadioChild}><PlusCircleTwoTone/>添加单选题</Button>
                         <Button className={"create_button"} onClick={this.onAddCheckBoxChild}><PlusSquareTwoTone/>添加多选题</Button>
                         <Button className={"create_button"} onClick={this.onAddTextChild}><EditTwoTone/>添加文本题</Button>
-                        <Statistic className={"create_statistic"} title="当前题目数" value={this.state.questionNum}
+                        <Card className={"create_statistic"} size='small'>
+                        <Statistic   title="当前题目数" value={this.state.questionNum}
                                    prefix={<ProfileOutlined/>}/>
-                    </div>
-                </Affix>
+                                   </Card>
+                        <Button className={"create_button"} onClick={this.handleSave}
+                                shape="round"><CheckOutlined/>保存问卷</Button>                                   
+                       <Button className={"create_button"}  onClick={this.handleSubmit}
+                                shape="round"><CheckOutlined/>发布问卷</Button>
+
+                </div>
                 <div className={"create_content"}>
-                    <div className={"create_title_div"}><span
-                        className={"create_title_span"}><strong>问卷标题：</strong></span><Input className={"create_title"}
-                                                                                            onCompositionStart={this.handleComposition}
-                                                                                            onCompositionUpdate={this.handleComposition}
-                                                                                            onCompositionEnd={this.handleComposition}
-                                                                                            name="questionnaireTitle"
-                                                                                            placeholder="请输入问卷标题"
-                                                                                            onChange={this.changeTitle}/>
+                    <div className={"create_title_div"}><Title level={2}>问卷标题：
+                      <Input className={"create_title"}
+                             onCompositionStart={this.handleComposition}
+                             onCompositionUpdate={this.handleComposition}
+                              onCompositionEnd={this.handleComposition}
+                            name="questionnaireTitle"
+                             placeholder="请输入问卷标题"
+                            onChange={this.changeTitle}/> </Title>
                     </div>
-                    <div className={"create_title_div"}>
+                    <div className={"creat_data_div"}>
                         <span><strong>发布者：</strong>{this.state.username}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
                         className={"create_title_span"}><strong>问卷截止时间：</strong></span>
                         <DatePicker className={"create_datePicker"} showTime showNow={false} disabledDate={(current) => {return current<moment().subtract(1,"second")}} onOk={this.onOk}/></div>
@@ -357,13 +363,8 @@ class CreatePage extends React.Component {
                                     chiefHandleDelete={this.chiefHandleDelete}
                                     chiefHandleChange={this.chiefHandleChange}
                                     chiefMoveUp={this.chiefMoveUp} chiefMoveDown={this.chiefMoveDown}/>
-                    <Divider className={"create_divider"}/>
-                    <div className={"create_buttons"}>
-                        <Button className={"create_submit_button"} type="primary" onClick={this.handleSubmit}
-                                shape="round"><CheckOutlined/>保存并发布问卷</Button>
-                        <Button className={"create_submit_button"} type="primary" onClick={this.handleSave}
-                                shape="round"><CheckOutlined/>保存问卷</Button>
-                    </div>
+
+
                 </div>
             </>
         )

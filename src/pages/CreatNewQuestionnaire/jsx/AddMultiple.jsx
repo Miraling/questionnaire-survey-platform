@@ -147,6 +147,7 @@ class AddMultiple extends React.Component {
                         )
                     })}
                 </div>
+                <div>
                 <Button className={"add_choice"} type="dashed" onClick={this.addChoice}><PlusOutlined/>添加选项</Button>
                 <Button className={"add_button"} size={"small"} icon={<CloseCircleOutlined/>}
                         onClick={this.handleDelete}>删除</Button>
@@ -154,6 +155,7 @@ class AddMultiple extends React.Component {
                         onClick={this.moveDown}>下移</Button>
                 <Button className={"add_button"} size={"small"} icon={<UpCircleOutlined/>}
                         onClick={this.moveUp}>上移</Button>
+                        </div>
             </div>
         )
     }

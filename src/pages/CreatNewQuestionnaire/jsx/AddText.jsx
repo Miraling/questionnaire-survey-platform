@@ -76,12 +76,14 @@ class AddText extends React.Component {
                         <Radio value={true}>必填</Radio>
                         <Radio value={false}>非必填</Radio>
                     </Radio.Group></div>
+                    <div>
                 <Button className={"add_button"} size={"small"} icon={<CloseCircleOutlined/>}
                         onClick={this.handleDelete}>删除</Button>
                 <Button className={"add_button"} size={"small"} icon={<DownCircleOutlined/>}
                         onClick={this.moveDown}>下移</Button>
                 <Button className={"add_button"} size={"small"} icon={<UpCircleOutlined/>}
                         onClick={this.moveUp}>上移</Button>
+                        </div>
             </div>
         )
     }

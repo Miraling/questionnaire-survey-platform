@@ -1,29 +1,36 @@
 .create_button {
-    display: block;
-    margin-top: 30px;
+    display: flex;
+    margin-top: 3vh;
+    align-items: center;
 }
 
 .create_affix {
-    position: absolute;
-    margin-left: 30px;
-    width: 150px;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:center;
+    position: fixed;
+    padding: auto;
+    margin: auto;
+    width: 25vw;
+    height: 100vh;
+    background: #3498db;
 }
 
 .create_content {
-    float: top;
-    margin: auto;
-    width: 70%;
+    margin-left: 25vw;
+    width: 75vw;
 }
 
 .create_title {
-    display: inline-block;
-    width: 300px;
-    margin-top: 80px;
+    display: inline-flex;
+    width: 10rem;
+    margin-top: 1.5rem;
 }
 
 .create_statistic {
-    margin-top: 50px;
-    margin-left: 25px;
+    margin-top: 3vh;
+
 }
 
 .create_datePicker {
@@ -31,21 +38,37 @@
 }
 
 .create_title_div {
-    text-align: center;
-    margin: auto auto 30px;
+    display: flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    margin: auto auto 0.5rem;
+}
+.creat_data_div{
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items: center;
+    margin: auto auto 0.5rem;
+}
+.create_title_span{
+    display: inline-flex;
 }
 
 .create_divider {
-    margin-top: 100px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .create_submit_button {
     float: right;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 1rem;
+    margin-right: 1rem;
     display: inline-block;
 }
 
 .create_buttons {
-    height: 100px;
+    height: 5rem;
 }
